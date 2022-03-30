@@ -15,13 +15,14 @@ import githubReducer from "./GithubReducer";
 
     const initialState = {
         users: [],
-        loading: true
+        loading: false
     }
 
     // const [state, dispatch] = useReducer(githubReducer, initialState)
     const [{ users, loading }, dispatch] = useReducer(githubReducer, initialState);
 
     const fetchUsers = async () => {
+        setLoading()
        const response = await fetch(
          `${ GITHUB_URL}/users`,
          {
@@ -39,6 +40,8 @@ import githubReducer from "./GithubReducer";
     //    setUsers(data);
     //    setLoading(false);
     };
+
+    const setLoading = () => dispatch({ type: 'SET_LOADING' });
 
     return <GithubContext.Provider value={{ users, loading, fetchUsers }}>
         {children}
