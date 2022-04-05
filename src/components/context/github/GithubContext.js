@@ -16,12 +16,13 @@ import githubReducer from "./GithubReducer";
 
     const initialState = {
         users: [],
-        user: [],
+        user: {},
+        repos: [],
         loading: false
     }
 
     // const [state, dispatch] = useReducer(githubReducer, initialState)
-    const [{ users, user, loading }, dispatch] = useReducer(githubReducer, initialState);
+    const [{ users, user, repos, loading }, dispatch] = useReducer(githubReducer, initialState);
 
     // Search users
     const searchUsers = async (text) => {
@@ -72,15 +73,49 @@ import githubReducer from "./GithubReducer";
        }
     };
 
+    //  get user repos
+    const getUserRepos = async (login) => {
+      setLoading();
+
+      const params = new URLSearchParams({
+        sort: 'created',
+        per_page: 10
+      });
+
+     
+      const response = await fetch(`${GITHUB_URL}/users/${login}/repos?${params}`, {
+        headers: {
+          Authorization: `token ${GITHUB_TOKEN}`,
+        },
+      });
+
+      const data = await response.json();
+
+      dispatch({
+        type: "GET_REPOS",
+        payload: data,
+      });
+    };
 
     const clearUsers = () => dispatch({ type: 'CLEAR_USERS' });
     const setLoading = () => dispatch({ type: 'SET_LOADING' });
 
     return (
-      <GithubContext.Provider value={{ users, user, loading, searchUsers, clearUsers, getUser  }}>
+      <GithubContext.Provider
+        value={{
+          users,
+          user,
+          repos,
+          loading,
+          searchUsers,
+          clearUsers,
+          getUser,
+          getUserRepos,
+        }}
+      >
         {children}
       </GithubContext.Provider>
     );
  }
-
+ 
  export default GithubContext;
