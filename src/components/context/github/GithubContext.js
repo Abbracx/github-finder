@@ -1,4 +1,5 @@
 import { createContext, useReducer } from "react";
+
 import githubReducer from "./GithubReducer";
 
 
@@ -15,7 +16,7 @@ import githubReducer from "./GithubReducer";
 
     const initialState = {
         users: [],
-        user: {},
+        user: [],
         loading: false
     }
 
@@ -25,8 +26,6 @@ import githubReducer from "./GithubReducer";
     // Search users
     const searchUsers = async (text) => {
         setLoading()
-
-        
         const params = new URLSearchParams({
             q: text
         })
@@ -52,7 +51,7 @@ import githubReducer from "./GithubReducer";
 
 
     // Get a single user
-    const getUsers = async (login) => {
+    const getUser = async (login) => {
        setLoading();
 
        const response = await fetch(`${GITHUB_URL}/users/${login}`, {
@@ -67,7 +66,7 @@ import githubReducer from "./GithubReducer";
 
          const  data = await response.json()
          dispatch({
-           type: "GET_USERS",
+           type: "GET_USER",
            payload: data,
          });
        }
@@ -78,7 +77,7 @@ import githubReducer from "./GithubReducer";
     const setLoading = () => dispatch({ type: 'SET_LOADING' });
 
     return (
-      <GithubContext.Provider value={{ users, user, loading, searchUsers, clearUsers  }}>
+      <GithubContext.Provider value={{ users, user, loading, searchUsers, clearUsers, getUser  }}>
         {children}
       </GithubContext.Provider>
     );
