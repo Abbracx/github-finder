@@ -1,14 +1,14 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 // import Navbar from "./components/layouts/Navbar";
-import Navbar from "./components/layouts/Navbar.jsx";
-import Footer from "./components/layouts/Footer.jsx";
-import Alert from "./components/layouts/Alert.jsx";
-import Home from "./pages/Home.jsx";
-import User from "./pages/User.jsx";
-import About from "./pages/About.jsx";
-import NotFound  from "./pages/NotFound.jsx";
-import { GitHubProvider } from "./components/context/github/GithubContext.jsx";
-import { AlertProvider } from "./components/context/alert/AlertContext.jsx";
+import Navbar from "../src/components/layouts/Navbar";
+import Footer from "./components/layouts/Footer";
+import Alert from "./components/layouts/Alert";
+import Home from "./pages/Home";
+import User from "./pages/User";
+import About from "./pages/About";
+import NotFound  from "./pages/NotFound";
+import { GitHubProvider } from "./components/context/github/GithubContext";
+import { AlertProvider } from "./components/context/alert/AlertContext";
 
 function App() {
   return (
